@@ -17,12 +17,20 @@ const {weatherByCityIdService} = require("../services/weatherService")
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const weatherByCoordenates = async (req,res)=>{
+const weatherByCoordenates = async (req,res,next)=>{
 
-  const {lon,lat} = req.query;
-  const weather = await findWeather(lon,lat);
-  const success = new Succes(weather);
-  res.json(success);
+  try {
+
+    const {lon,lat} = req.query;
+    const weather = await findWeather(lon,lat);
+    const success = new Succes(weather);
+    res.json(success);
+
+  } catch (error) {
+    next(error)
+  }
+
+
   
 }
 /**
@@ -30,12 +38,18 @@ const weatherByCoordenates = async (req,res)=>{
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
- const weatherByCityId = async (req,res)=>{
+ const weatherByCityId = async (req,res,next)=>{
 
+try {
   const {city,id} = req.params;
   const weather = await weatherByCityIdService(city,id);
   const success = new Succes(weather);
   res.json(success);
+} catch (error) {
+  next(error)
+}
+
+
   
 }
 

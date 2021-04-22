@@ -20,11 +20,11 @@ const findWeather = async (lon,lat)=>{
 const weatherByCityIdService = async (city,id)=>{
     const cities = await cityRepo.findCities(city);
 
-    const cityData = cities.features.filter(e=>(e.id ===id))
+    const cityData = cities.features.find(e=>(e.id ===id))
     //logger.info(JSON.stringify(cityData))
-    const lon = cityData[0].geometry.coordinates[0];//el cityData lleva un [0] porque el filter devolvio un arrary ( codigo a mejorar)
+    const lon = cityData.geometry.coordinates[0];//el cityData lleva un [0] porque el filter devolvio un arrary ( codigo a mejorar)
     
-    const lat = cityData[0].geometry.coordinates[1];//el cityData lleva un [0] porque el filter devolvio un arrary ( codigo a mejorar)
+    const lat = cityData.geometry.coordinates[1];//el cityData lleva un [0] porque el filter devolvio un arrary ( codigo a mejorar)
     return await findWeather(lon,lat)
 }
 

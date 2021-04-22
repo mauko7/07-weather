@@ -20,13 +20,17 @@ const {findCities} = require ("../services/cityService")
  * @param {express.Response} res 
  */
 
-const cities=async(req,res)=>{
+const cities=async(req,res,next)=>{
+  try {
+    const city =req.params.city;
+    const cities = await findCities(city);//Tiene 2 partes, va a buscar a capa servicios donde filtra que info quiere y esa a su vez busca en repository
+    const succes = new Succes(cities);  //este objeto hace que se devuelva todo en un fortmato determinado (handler)
   
-  const city =req.params.city;
-  const cities = await findCities(city);//Tiene 2 partes, va a buscar a capa servicios donde filtra que info quiere y esa a su vez busca en repository
-  const succes = new Succes(cities);  //este objeto hace que se devuelva todo en un fortmato determinado (handler)
+    res.json(succes);
+  } catch (error) {
+    next(error)
+  }
 
-  res.json(succes);
   
   
 };

@@ -19,6 +19,7 @@ class CityRepository{
         const url = `${this.pathBase}${city}.json?access_token=${this.apiKey}&limit=${this.limit}&language=${this.language}`;
         const response = await axios.get();
         */
+       throw new Error("error de prueba")
        try {
            
         const response = await axios.get(`${this.pathBase}${city}.json?`,{
